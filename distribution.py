@@ -8,12 +8,12 @@ import math
 import random
 
 N = 1000 #number of swarms
-# M = 10**6 #Sun masses
-M = 10**6*2*10**30 #KG
-R = 10*3.26*63300*149600000*1000 #m, equiv to 10PC
-# R = 10 #PC
+M = 10**6 #Sun masses
+# M = 10**6*2*10**30 #KG
+# R = 10*3.26*63300*149600000*1000 #m, equiv to 10PC
+R = 10 #PC
 a = 0.6*R #unit of R
-spheres = 100 #number of spheres to iterate through, experimental, dimensionless
+spheres = 20 #number of spheres to iterate through, experimental, dimensionless
 m = M/N #KG, swarm mass
 
 swarms = []
@@ -32,7 +32,7 @@ def density(r):     #unit of mass/R^3
     return 3*M/(4*math.pi*a**3*(1+r**2/a**2)**(5/2))
 
 def velocity(r):
-    v = (1-r/(R+0.5))*15    #in km/s, not sure about the units of r,R
+    v = (1-r/(R+0.5))*15    #in km/s; r,R in PC
     vx = random.uniform(0, v)
     vy = random.uniform(0, math.sqrt(v**2-vx**2))
     vz = math.sqrt(v**2-vx**2-vy**2)
@@ -41,12 +41,14 @@ def velocity(r):
 swarmsAdded = 0
 for i in range(spheres):
     #find the distance of the sphere from the center
-    radius = R/spheres*(i+1) #unit of R
+    radius = (R/spheres)*(i+1) #unit of R
+    dr = R/spheres
     #calculate density of the sphere
     den = density(radius)
     #find the number of swarms to add
-    num = round(den*4/3*math.pi*radius**3/m)-swarmsAdded
+    num = round(den*4*math.pi*radius**2*dr/m)
     swarmsAdded += num
+    # print(num)
     #add the swarms
     for j in range(num):
         x = random.uniform(0, radius)
