@@ -1,11 +1,8 @@
-# take input parameters (mass, number, size etc.)
-# create list of swarms (position, velocity)
-# check how the mass corresponds
-    # if it doesn't try changing the a constant a little
-# export it
+#distance is in PC, velocity is in km/s, mass is in Sun masses
 
 import math
 import random
+import csv
 
 N = 1000 #number of swarms
 M = 10**6 #Sun masses
@@ -14,7 +11,7 @@ M = 10**6 #Sun masses
 R = 10 #PC
 a = 0.6*R #unit of R
 spheres = 20 #number of spheres to iterate through, experimental, dimensionless
-m = M/N #KG, swarm mass
+m = M/N #units of M, swarm mass
 
 swarms = []
 class Swarm:
@@ -38,16 +35,13 @@ def velocity(r):
     vz = math.sqrt(v**2-vx**2-vy**2)
     return vx, vy, vz
 
-swarmsAdded = 0
 for i in range(spheres):
     #find the distance of the sphere from the center
     radius = (R/spheres)*(i+1) #unit of R
-    dr = R/spheres
     #calculate density of the sphere
     den = density(radius)
     #find the number of swarms to add
-    num = round(den*4*math.pi*radius**2*dr/m)
-    swarmsAdded += num
+    num = round(den*4*math.pi*radius**2*R/spheres/m)
     # print(num)
     #add the swarms
     for j in range(num):
@@ -63,6 +57,11 @@ for i in range(spheres):
 for i in swarms:
     print(i)
 print(len(swarms))
-print(swarmsAdded)
 print(R)
 print(f"Mass should be {M}, it is {len(swarms)*m}, meaning {M/len(swarms)/m} ratio")
+
+with open("data.csv", "w") as fp:
+    writer = csv.writer(fp)
+    writer.writerow([m])
+    for i in swarms:
+        writer.writerow([i.x, i.y, i.z, i.vx, i.vy, i.vz])

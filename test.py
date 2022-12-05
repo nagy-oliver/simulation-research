@@ -1,3 +1,6 @@
+#recalculate G for the situation
+#change v units
+
 import rebound
 import matplotlib.pyplot as plt
 import numpy as np
