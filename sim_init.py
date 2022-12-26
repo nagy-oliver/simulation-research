@@ -4,12 +4,13 @@ import csv
 import json
 
 sim = rebound.Simulation()
+print(sim.t)
 
 # unit conversion
 PC = 3.08567758E16  # PC to m
 MS = 1.989E30       # Ms to kg
 sim.G = 6.67E-11    # in m^3 kg^-1 s^-2
-sim.dt = 31556926   # timestep of 1 year
+sim.dt = 315569260000   # timestep of 1 year    10000/1000y
 
 
 # loading data into simulation
@@ -27,6 +28,8 @@ with open("data.csv", "r") as fp:
 data = [[[i.x],[i.y],[i.z]] for i in sim.particles]
 for i in range(100):
     sim.steps(100)
+    print(i)
+    print(sim.t/315569260000)
     for j in range(len(sim.particles)):
         data[j][0].append(sim.particles[j].x)
         data[j][1].append(sim.particles[j].y)
