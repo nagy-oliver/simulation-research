@@ -2,7 +2,7 @@ import json
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
-with open("archive/two_mil.json", "r") as fp:
+with open("archive/two_mil/data.json", "r") as fp:
     data = json.load(fp)
 
 fig = plt.figure()
@@ -14,6 +14,6 @@ def update_plot(j):
     print(j)
 
 # Set up the animation
-ani = animation.FuncAnimation(fig, update_plot, frames=2000, interval=10)
-ani.save('animation.mp4')
-# plt.show()
+# ani = animation.FuncAnimation(fig, update_plot, frames=2000, interval=10)
+# ani.save('animation.mp4')
+plt.show()

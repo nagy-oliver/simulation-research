@@ -2,20 +2,29 @@ import rebound
 import matplotlib.pyplot as plt
 import json
 
+import utils
+
 # load the simulation from data
 sim = rebound.Simulation("snapshot.bin")
 print(sim.t/31556926)
-with open("archive/two_mil/data.json", "r") as fp:
+with open("data.json", "r") as fp:
     data = json.load(fp)
 
 # pick up and integrate forward
-# for i in range(200):
+# for i in range(2000):
 #     print(f"Iteration number {i}")
-#     sim.steps(100)  #100/1000
+#     print(f"Simulation time: {sim.t/utils.YR}")
+#     print(f"Simulation timestep: {sim.dt/utils.YR}")
+#     # sim.steps(100)  #100/1000
+#     sim.integrate(sim.t + 1000*utils.YR)
+    
 #     for j in range(len(sim.particles)):
 #         data[j][0].append(sim.particles[j].x)
 #         data[j][1].append(sim.particles[j].y)
 #         data[j][2].append(sim.particles[j].z)
+#         data[j][3].append(sim.particles[j].vx)
+#         data[j][4].append(sim.particles[j].vy)
+#         data[j][5].append(sim.particles[j].vz)
 
 # save simulation data
 # with open("data.json", "w") as fp:
@@ -27,5 +36,5 @@ fig = plt.figure()
 ax = plt.axes(projection="3d")
 for i in data:
     ax.plot3D(i[0], i[1], i[2])
-    # ax.scatter3D(i[0][0], i[1][0], i[2][0])
+    ax.scatter3D(i[0][0], i[1][0], i[2][0])
 plt.show()

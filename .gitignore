@@ -2,3 +2,5 @@ data.csv
 data.json
 snapshot.bin
 archive/**
+__pycache__/**
+test_sim.py
