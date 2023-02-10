@@ -4,3 +4,4 @@ snapshot.bin
 archive/**
 __pycache__/**
 test_sim.py
+simulation.pem

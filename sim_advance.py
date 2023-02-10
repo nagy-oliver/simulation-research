@@ -5,9 +5,9 @@ import json
 import utils
 
 # load the simulation from data
-sim = rebound.Simulation("snapshot.bin")
+sim = rebound.Simulation("archive/snapshot2.bin")
 print(sim.t/31556926)
-with open("data.json", "r") as fp:
+with open("archive/data2.json", "r") as fp:
     data = json.load(fp)
 
 # pick up and integrate forward
