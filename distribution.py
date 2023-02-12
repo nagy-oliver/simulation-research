@@ -1,13 +1,19 @@
+# add % of the radial velocity
+
 import math
 import random
 import csv
 
-N = 1000      #number of swarms
-M = 10**6     #Sun masses
-R = 10        #PC
-a = 0.6*R     #unit of R
-m = M/N       #units of M, swarm mass
-spheres = 20  #number of spheres to iterate through, experimental, dimensionless
+N = 1000            # number of swarms
+M = 10**6           # Sun masses
+R = 10              # PC
+a = 0.6*R           # unit of R
+
+bh_mass = 0.1*M     # mass of the black hole
+R_start = 0.1*R     # closest distance of swarm from the center
+
+m = (M-bh_mass)/N   # units of M, swarm mass
+spheres = 20        # number of spheres to iterate through, experimental, dimensionless
 
 swarms = []
 class Swarm:
@@ -21,9 +27,11 @@ class Swarm:
     def __str__(self):
         return f"{round(self.x, 3)} {round(self.y, 3)} {round(self.z, 3)}    {round(self.vx, 3)} {round(self.vy, 3)} {round(self.vz, 3)}    {math.sqrt(self.x**2+self.y**2+self.z**2)} {math.sqrt(self.vx**2+self.vy**2+self.vz**2)}"
 
+# Point density at distance r
 def density(r):     #unit of mass/R^3
     return 3*M/(4*math.pi*a**3*(1+r**2/a**2)**(5/2))
 
+# Velocity of a swarm at r[PC]
 def velocity(r):
     v = (1-r/(R+0.5))*15    #in km/s; r,R in PC
     vx = random.uniform(0, v)
@@ -33,7 +41,7 @@ def velocity(r):
 
 for i in range(spheres):
     #find the distance of the sphere from the center
-    radius = (R/spheres)*(i+1) #unit of R
+    radius = ((R-R_start)/spheres)*(i+1)+R_start #unit of R
     #calculate point density of the sphere
     den = density(radius)
     #find the number of swarms to add
@@ -56,7 +64,8 @@ for i in range(spheres):
 # add data to data.csv
 with open("data.csv", "w") as fp:
     writer = csv.writer(fp)
-    writer.writerow([m])
+    writer.writerow([m]) #swarm mass
+    writer.writerow([bh_mass]) #black hole mass
     for i in swarms:
         writer.writerow([i.x, i.y, i.z, i.vx, i.vy, i.vz])
 
