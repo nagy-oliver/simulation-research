@@ -10,7 +10,7 @@ R = 10              # PC
 a = 0.6*R           # unit of R
 
 bh_mass = 0.1*M     # mass of the black hole
-R_start = 0.1*R     # closest distance of swarm from the center
+R_start = 0 #0.1*R     # closest distance of swarm from the center
 
 m = (M-bh_mass)/N   # units of M, swarm mass
 spheres = 20        # number of spheres to iterate through, experimental, dimensionless
