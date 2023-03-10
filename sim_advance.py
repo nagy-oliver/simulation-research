@@ -31,10 +31,13 @@ with open("data.json", "r") as fp:
 #     fp.write(json.dumps(data))
 # sim.save("snapshot.bin")
 
+data_dil = [[j[::100] for j in data[index]] for (index, i) in enumerate(data)]
+print("diluted")
 # display in matplotlib
 fig = plt.figure()
+print("works")
 ax = plt.axes(projection="3d")
-for i in data:
+for i in data_dil:
     ax.plot3D(i[0], i[1], i[2])
     ax.scatter3D(i[0][0], i[1][0], i[2][0])
 plt.show()

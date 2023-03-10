@@ -57,9 +57,10 @@ for i in range(spheres):
         vx, vy, vz = velocity(radius)
         swarms.append(Swarm(x, y, z, vx, vy, vz))
 
-# for i in swarms:
-#     print(i)
-# print(f"Mass should be {M}, it is {len(swarms)*m}, meaning {M/len(swarms)/m} ratio")
+for i in swarms:
+    print(i)
+print(f"Mass should be {M}, it is {len(swarms)*m}, meaning {M/len(swarms)/m} ratio")
+print(f"Number of swarms is {len(swarms)} and mass of one is {m}")
 
 # add data to data.csv
 with open("data.csv", "w") as fp:
